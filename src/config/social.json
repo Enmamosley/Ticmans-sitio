@@ -1,24 +1,9 @@
 {
   "main": [
     {
-      "name": "instagram",
-      "icon": "FaInstagram",
-      "link": "https://www.instagram.com/"
-    },
-    {
-      "name": "dribbble",
-      "icon": "FaDribbble",
-      "link": "https://dribbble.com/"
-    },
-    {
-      "name": "behance",
-      "icon": "FaBehance",
-      "link": "https://behance.com/"
-    },
-    {
-      "name": "lastfm",
-      "icon": "FaLastfm",
-      "link": "https://www.last.fm/"
+      "name": "Facebook",
+      "icon": "FaFacebook",
+      "link": "https://www.facebook.com/ticmans"
     }
   ]
 }
