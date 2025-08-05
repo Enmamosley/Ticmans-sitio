@@ -39,6 +39,6 @@ list:
       floating_image_2: "/images/avatar/avatar-2.png" 
     button:
       enable: true
-      label: Conocer Más
+      label: Contáctanos
       url: "/contacto"
 ---

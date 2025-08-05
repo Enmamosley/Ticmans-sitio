@@ -9,7 +9,7 @@ list:
     svgIcon: "/images/svg-icons/glass-magnifier.svg"
     button:
       enable: true
-      label: LEER MÁS
+      label: Contáctanos
       link: "/contacto"
   - enable: true
     title: Propuesta Personalizada
@@ -17,7 +17,7 @@ list:
     svgIcon: "/images/svg-icons/peoples.svg"
     button:
       enable: true
-      label: LEER MÁS
+      label: Contáctanos
       link: "/contacto"
   - enable: true
     title: Implementación y Soporte
@@ -25,6 +25,6 @@ list:
     svgIcon: "/images/svg-icons/smiley.svg"
     button:
       enable: true
-      label: LEER MÁS
+      label: Contáctanos
       link: "/contacto"
 ---

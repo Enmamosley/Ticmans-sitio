@@ -60,7 +60,7 @@ values:
       logo: "/images/company/statistics.svg"
       button:
         enable: true
-        label: LEER MÁS
+        label: Contáctanos
         link: "/contacto"
     - enable: true
       title: "Confianza"
@@ -68,7 +68,7 @@ values:
       logo: "/images/company/target.svg"
       button:
         enable: true
-        label: LEER MÁS
+        label: Contáctanos
         link: "/contacto"
     - enable: true
       title: "Innovación"
@@ -76,11 +76,11 @@ values:
       logo: "/images/company/functional.svg"
       button:
         enable: true
-        label: LEER MÁS
+        label: Contáctanos
         link: "/contacto"
 
 vision_mission:
-  enable: true
+  enable: false
   title: "Nuestra <em>Misión</em> & <em>Visión</em>"
   list:
    - enable: true
@@ -105,7 +105,7 @@ vision_mission:
        label: Únete a Nuestro Equipo
        url: "/contact"
 
-   - enable: true
+   - enable: false
      title: Compromiso con la Excelencia
      description: >-
       Entendemos que cada cliente es único. Por eso ofrecemos soporte personalizado adaptado a tus necesidades específicas. Nuestros representantes se tomarán el tiempo para comprender tu situación y proporcionar soluciones que funcionen para ti.
