@@ -3,7 +3,7 @@ enable: true
 title: "Servicios"
 button:
   enable: true
-  label: "Ver más servicios"
+  label: "Servicios"
   link: "/servicios"
 
 list:
