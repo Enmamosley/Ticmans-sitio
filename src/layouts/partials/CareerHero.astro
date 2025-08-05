@@ -1,0 +1,106 @@
+---
+import ImageMod from "@/components/ImageMod.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+
+const hero = Astro.props.hero;
+---
+
+<section class="ph-spacing">
+  <div class="container">
+    <div class="flex flex-col items-center gap-y-8">
+      <h1
+        class="text-h1-sm font-semibold hasEmphasize"
+        data-aos="fade-up-sm"
+        data-aos-delay="0"
+        set:html={markdownify(hero.title)}
+      />
+      {
+        hero.open_position_button.enable && (
+          <a
+            href={hero.open_position_button.link}
+            class="btn btn-primary rounded-lg font-medium"
+            data-aos="fade-up-sm"
+            data-aos-delay="50"
+          >
+            {hero.open_position_button.label}
+          </a>
+        )
+      }
+    </div>
+  </div>
+  <!-- Gallery -->
+  <div
+    id="career-hero-gallery-slider"
+    class="mt-16 overflow-hidden"
+    data-aos="fade-up-sm"
+    data-aos-delay="150"
+  >
+    <div class="swiper-wrapper">
+      {
+        hero.gallery.map((item: any) => (
+          <div class="swiper-slide" style="width: auto !important;">
+            <ImageMod
+              src={item.src}
+              alt={item.alt}
+              width={420}
+              height={580}
+              class="size-full rounded-xl object-cover max-h-[580px] w-[416px]"
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { Swiper } from "swiper";
+  import "swiper/css";
+  import { Autoplay, EffectCoverflow } from "swiper/modules";
+
+  const careerGallerySwiperInit = () => {
+    new Swiper("#career-hero-gallery-slider", {
+      modules: [Autoplay, EffectCoverflow],
+      loop: true,
+      speed: 1500,
+      autoplay: {
+        delay: 3000,
+      },
+      effect: "coverflow",
+      grabCursor: true,
+      centeredSlides: true,
+      slidesPerView: "auto",
+      loopAdditionalSlides: 2,
+      watchSlidesProgress: true,
+      coverflowEffect: {
+        rotate: 0,
+        stretch: 40,
+        depth: 150,
+        modifier: 1,
+        slideShadows: false,
+      },
+      breakpoints: {
+        0: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 40,
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 120,
+        },
+      },
+    });
+  };
+
+  document.addEventListener("astro:page-load", () => {
+    careerGallerySwiperInit();
+  });
+
+  document.addEventListener("astro:page-load", () => {
+    careerGallerySwiperInit();
+  });
+</script>

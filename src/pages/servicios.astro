@@ -1,0 +1,26 @@
+---
+import Base from "@/layouts/Base.astro";
+import BenefitsCarousel from "@/partials/BenefitsCarousel.astro";
+import CallToAction from "@/partials/CallToAction.astro";
+import FaqSection from "@/partials/FaqSection.astro";
+import KeyFeatures from "@/partials/KeyFeatures.astro";
+import OurServices from "@/partials/OurServices.astro";
+import SolvingProblems from "@/partials/SolvingProblems.astro";
+import TestimonialSection from "@/partials/TestimonialSection.astro";
+import { getEntry } from "astro:content";
+
+const pageIndex = await getEntry("feature", "-index");
+if (!pageIndex) return null;
+---
+
+<Base {...pageIndex.data}>
+  <div class="ph-spacing pb-0">
+    <OurServices hideButton={true} />
+  </div>
+  <SolvingProblems />
+  <BenefitsCarousel />
+  <KeyFeatures />
+  <TestimonialSection />
+  <FaqSection />
+  <CallToAction />
+</Base>

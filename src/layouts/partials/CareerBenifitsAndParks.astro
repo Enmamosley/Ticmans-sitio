@@ -1,0 +1,59 @@
+---
+import { markdownify } from "@/lib/utils/textConverter";
+import type { CollectionEntry } from "astro:content";
+
+const benefits_and_parks = Astro.props
+  .benefits_and_parks as CollectionEntry<"careers">["data"]["benefits_and_parks"];
+if (!benefits_and_parks) return null;
+const { enable, title, list } = benefits_and_parks;
+---
+
+{
+  enable && (
+    <section class="section">
+      <div class="container">
+        <div class="section-container">
+          <div class="section-intro centralize">
+            <h2
+              set:html={markdownify(title)}
+              data-aos="fade-up-sm"
+              data-aos-delay="0"
+              class="title hasEmphasize"
+            />
+          </div>
+          <div class="section-content">
+            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {list.length &&
+                list.map((item, index) => {
+                  const aosDelay = 100 * (index % 3);
+                  return (
+                    <div class="group p-6 xl:p-10 hover:shadow-4xl rounded-xl xl:rounded-3xl transition-shadow duration-300 colorize">
+                      <div data-aos="fade-up-sm" data-aos-delay={aosDelay}>
+                        <div class="flex h-full flex-col gap-10 lg:gap-16 justify-between">
+                          {/* LOGO */}
+                          <div class="rounded-full overflow-hidden">
+                            <img src={item.logo} class="w-16 h-16 " />
+                          </div>
+                          {/* CONTENT */}
+                          <div>
+                            <h3
+                              class="text-h4-sm mb-6 text-text-dark font-medium "
+                              set:html={markdownify(item.title)}
+                            />
+                            <p
+                              class="text-text-light"
+                              set:html={markdownify(item.description)}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

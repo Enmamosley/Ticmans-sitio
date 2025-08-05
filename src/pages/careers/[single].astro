@@ -1,0 +1,205 @@
+---
+import config from "@/config/config.json";
+import Base from "@/layouts/Base.astro";
+import { getSinglePage } from "@/lib/contentParser.astro";
+import CallToAction from "@/partials/CallToAction.astro";
+import PageHeader from "@/partials/PageHeader.astro";
+
+export async function getStaticPaths() {
+  const COLLECTION_FOLDER = "careers";
+  const allPosts = await getSinglePage(COLLECTION_FOLDER);
+  const paths = allPosts.map((post) => ({
+    params: {
+      single: post.slug,
+    },
+    props: { post },
+  }));
+  return paths;
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const {
+  description,
+  meta_title,
+  title,
+  image,
+  department,
+  location,
+  duration,
+  salary,
+  apply_button,
+} = post.data;
+---
+
+<Base
+  title={title}
+  meta_title={meta_title}
+  description={description}
+  image={image}
+>
+  <PageHeader title={title} subtitle={description} />
+  <section class="ph-merged-section">
+    <div class="container container--ph-merged">
+      <div class="section-container">
+        <div class="section-content">
+          <div class="bg-light p-10 rounded-lg mb-16">
+            <p class="mb-2 text-xl text-text-dark">Job Overview</p>
+            <p class="font-semibold text-text-dark text-lg">
+              {
+                `Department: ${department}: Location: ${location}: Type: ${duration}: Salary: ${salary}`
+              }
+            </p>
+
+            <a
+              href="#apply-form"
+              class="btn btn-outline-text-dark rounded-full py-3 font-medium mt-10"
+            >
+              {apply_button?.label}
+            </a>
+          </div>
+          <div class="content">
+            <Content />
+          </div>
+          <!-- APPLY FORM -->
+          <div
+            id="apply-form"
+            class="pt-16 border-t border-border mt-16 lg:w-4/5 scroll-mt-16"
+          >
+            <h3 class="text-h4 mb-8">Apply For Position</h3>
+            <form 
+              class="form" 
+              action="https://formsubmit.co/enmamosley@gmail.com"
+              method="POST"
+              data-astro-reload
+            >
+              {/* FormSubmit Configuration */}
+              <input type="hidden" name="_subject" value="Nueva aplicación de trabajo - Ticmans" />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="_next" value="https://ticmans.com/gracias" />
+              <input type="hidden" name="origen" value="Aplicación de Trabajo" />
+              <input type="hidden" name="posicion" value={post.data.title} />
+              <div class="col-span-2">
+                <label for="name" class="form-label">Your Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="Type your name"
+                  class="form-input"
+                  required
+                />
+              </div>
+
+              <div class="max-sm:col-span-2">
+                <label for="email" class="form-label">Your Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="Enter your email"
+                  class="form-input"
+                  required
+                />
+              </div>
+
+              <div class="max-sm:col-span-2">
+                <label for="phone" class="form-label">Your Phone</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="Enter phone number"
+                  class="form-input"
+                  required
+                />
+              </div>
+
+              <div class="col-span-2">
+                <label for="address" class="form-label">Address</label>
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  placeholder="Address, City, State, Zip Code"
+                  class="form-input"
+                  required
+                />
+              </div>
+
+              <div class="col-span-2">
+                <label for="portfolio" class="form-label"
+                  >Your Portfolio *</label
+                >
+                <input
+                  type="url"
+                  id="portfolio"
+                  name="portfolio"
+                  placeholder="Portfolio Link"
+                  class="form-input"
+                  required
+                />
+              </div>
+
+              <div class="col-span-2">
+                <div class="relative">
+                  <input
+                    type="file"
+                    id="resume"
+                    name="resume"
+                    class="sr-only"
+                    required
+                  />
+                  <label
+                    for="resume"
+                    class="w-full cursor-pointer bg-light rounded-md px-5 py-3 flex gap-4 items-center"
+                  >
+                    <span
+                      class="leading-6 text-lg text-text-dark border border-text-dark py-2 px-4 rounded-md"
+                      >Choose File</span
+                    >
+                    <span
+                      id="file-name"
+                      class="leading-6 text-lg text-text-light"
+                      >No File Chosen</span
+                    >
+                  </label>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                class="btn btn-primary rounded-lg font-semibold justify-self-start mt-5"
+                >Apply Now</button
+              >
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <CallToAction />
+</Base>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    // ########################## Resume File Name ##########################
+
+    const fileInput = document.getElementById("resume") as HTMLInputElement;
+
+    if (fileInput) {
+      const fileNameSpan = document.getElementById("file-name");
+
+      if (fileNameSpan) {
+        fileInput.addEventListener("change", () => {
+          if (fileInput.files && fileInput.files.length > 0) {
+            fileNameSpan.textContent = fileInput.files[0].name;
+          } else {
+            fileNameSpan.textContent = "No file chosen";
+          }
+        });
+      }
+    }
+  });
+</script>

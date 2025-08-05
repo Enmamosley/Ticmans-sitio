@@ -1,0 +1,98 @@
+---
+import ImageMod from "@/components/ImageMod.astro";
+import RightArrowBtn from "@/components/RightArrowBtn.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
+
+const sectionData = (await getEntry("keyFeaturesSectionCollection", "key-features")) as CollectionEntry<"keyFeaturesSectionCollection">;
+const { enable, title, list } = sectionData.data;
+---
+{
+  enable && (
+    <section class="section">
+      <div class="container">
+        <div class="section-container">
+          <div class="section-intro centralize">
+            <h2 set:html={markdownify(title)} data-aos="fade-up-sm" data-aos-delay="0" class="title hasEmphasize" />
+          </div>
+          <div class="section-content">
+            <div class="flex flex-col gap-20 lg:gap-28">
+              {list.length &&
+                list
+                  .filter((f) => f.enable)
+                  .map((item, index) => {
+                    if (item.enable === false) return null;
+                    const isOdd = index % 2 !== 0;
+
+                    return (
+                      <div class:list={["flex flex-col lg:flex-row gap-y-12 items-center", { "lg:flex-row-reverse": isOdd }]}>
+                        {/* Feature IMAGE */}
+                        <div class="lg:w-6/12">
+                        <div data-aos="fade-up-sm" data-aos-delay="150">
+                          <div class="inline-block relative before:bg-primary/25 before:absolute before:inset-x-0 before:top-0 before:h-[92%] before:-z-10 before:rounded-xl rounded-xl px-6 pt-6 ">
+                            <ImageMod
+                              width={780}
+                              height={550}
+                              src={item.feature_image.src}
+                              alt={item.feature_image.alt}
+                              class="w-full max-w-[580px] shadow-4xl rounded-xl"
+                            />
+
+                            {/* Floating Images */}
+                            {item.floating_images.enable && (
+                              <div class="">
+                                {item.floating_images.floating_image_1 && (
+                                  <ImageMod
+                                    width={100}
+                                    height={100}
+                                    src={item.floating_images.floating_image_1}
+                                    alt={""}
+                                    class="absolute w-14 border-2 border-white rounded-full aspect-square object-cover top-0 right-[30%]  shadow-lg bg-light"
+                                  />
+                                )}
+                              </div>
+                              <div class="">
+                                {item.floating_images.floating_image_2 && (
+                                  <ImageMod
+                                    width={100}
+                                    height={100}
+                                    src={item.floating_images.floating_image_2}
+                                    alt={""}
+                                    class="absolute w-14 border-2 border-white rounded-full aspect-square object-cover bottom-[15%] left-0 shadow-lg bg-light"
+                                  />
+                                )}
+                              </div>
+                            )}
+                          </div>
+                          </div>
+                        </div>
+
+                        {/* Feature Content */}
+                        <div class:list={[" lg:w-6/12", { "lg:pr-20 lg:pl-0": isOdd },{ "lg:pl-20": !isOdd }]} data-aos="fade-up-sm" data-aos-delay="50">
+                          <h3 class="text-h4-sm hasEmphasize [&>em]:before:!-translate-y-2" data-aos="" set:html={markdownify(item.title)} />
+                          <p class=" mt-4 text-text/80" set:html={markdownify(item.description)} />
+                          <ul class="list-disc mt-6 ml-6 space-y-2">
+                            {item.highlights.length &&
+                              item.highlights
+                                .filter((f) => f.enable)
+                                .map((highlight) => <li class="font-medium text-lg">{highlight.title}</li>)}
+                          </ul>
+                          {item.button.enable && (
+                            <RightArrowBtn
+                              label={item.button.label}
+                              link={item.button.url}
+                              className="rounded-full btn-text-dark mt-10"
+                            />
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

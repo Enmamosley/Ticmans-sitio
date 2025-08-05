@@ -1,0 +1,139 @@
+---
+import ImageMod from "@/components/ImageMod.astro";
+import TestimonialFeaturedCard from "@/components/TestimonialFeaturedCard.astro";
+import Base from "@/layouts/Base.astro";
+import { humanize, markdownify } from "@/lib/utils/textConverter";
+import CallToAction from "@/partials/CallToAction.astro";
+import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
+
+const pageIndex = await getEntry("testimonials", "-index");
+if (!pageIndex) return null;
+const { title, testimonials } = pageIndex.data;
+
+const testimonialSectionData = (await getEntry(
+  "testimonialSectionCollection",
+  "testimonial"
+)) as CollectionEntry<"testimonialSectionCollection">;
+
+const featuredTestimonial = testimonialSectionData.data.list[0];
+const testimonialList = testimonialSectionData.data.list.slice(1);
+---
+
+<Base {...pageIndex.data}>
+  <section class="ph-spacing bg-light relative">
+    <div class="container relative z-20">
+      <div
+        class="flex flex-col lg:flex-row w-full lg:items-center lg:justify-between gap-10"
+      >
+        <h1
+          data-aos="fade-up-sm"
+          data-aos-delay="0"
+          set:html={humanize(title)}
+          class="font-semibold mb-4 text-left text-h2 hasEmphasize lg:w-5/12 text-balance"
+        />
+        <div
+          class="lg:text-right lg:w-7/12"
+          data-aos="fade-up-sm"
+          data-aos-delay="100"
+        >
+          {
+            featuredTestimonial && (
+              <TestimonialFeaturedCard testimonial={featuredTestimonial} />
+            )
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-24 xl:pt-40">
+    <div class="container lg:mx-auto" style="max-width: 1672px !important;">
+      <div class="section-container">
+        <div class="section-intro text-center">
+          <h2
+            class="title hasEmphasize"
+            data-aos=""
+            set:html={markdownify(testimonials.title)}
+          />
+        </div>
+        <div class="section-content">
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 xl:gap-8"
+          >
+            {
+              testimonialList.length &&
+                testimonialList.map((testimonial, index) => {
+                  const aosDelay = 100 * (index % 3);
+                  return (
+                    <div data-aos="fade-up-sm" data-aos-delay={aosDelay}>
+                      <div class="bg-white rounded-3xl-sm p-8 lg:px-11 lg:py-12 border border-border hover:shadow-4xl transition-all duration-300 hover:border-transparent">
+                        {/* Profile Area */}
+                        <div class="flex gap-4 items-center">
+                          <ImageMod
+                            src={testimonial.avatar}
+                            alt={testimonial.name}
+                            width={100}
+                            height={100}
+                            quality="high"
+                            class="rounded-full w-16 aspect-square object-cover bg-secondary/30"
+                          />
+                          <div>
+                            <h4 class="text-h6 mb-1">{testimonial.name}</h4>
+                            <p class="text-text-light">
+                              {testimonial.designation}
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Testimonial Area */}
+                        <div class="mt-14">
+                          <p class="text-h5-sm text-text-dark text-balance">
+                            "{testimonial.content}"
+                          </p>
+                        </div>
+
+                        {/* Rating Area */}
+                        <div class="mt-14">
+                          <div class="flex items-center gap-1">
+                            {[...Array(testimonial.rating.stars).fill("")].map(
+                              (_) => (
+                                <svg
+                                  width="20"
+                                  height="20"
+                                  viewBox="0 0 20 20"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M10 0L13.2138 6.09124L20 7.26542L15.2 12.2042L16.1803 19.0211L10 15.9822L3.81966 19.0211L4.8 12.2042L0 7.26542L6.78622 6.09124L10 0Z"
+                                    fill="#FFB443"
+                                  />
+                                </svg>
+                              )
+                            )}
+                          </div>
+                          <div class="flex items-center gap-10 mt-5 justify-between flex-wrap">
+                            <p>{testimonial.rating.stars} Reviews from</p>
+                            <ImageMod
+                              src={testimonial.rating.company}
+                              alt=""
+                              width={120}
+                              height={40}
+                              quality="high"
+                              class="inline-block h-8 w-auto"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <CallToAction />
+</Base>

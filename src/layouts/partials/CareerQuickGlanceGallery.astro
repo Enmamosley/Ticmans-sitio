@@ -1,0 +1,47 @@
+---
+import ImageMod from "@/components/ImageMod.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import type { CollectionEntry } from "astro:content";
+
+const quick_glance_gallery = Astro.props
+  .quick_glance_gallery as CollectionEntry<"careers">["data"]["quick_glance_gallery"];
+const { enable, title, list } = quick_glance_gallery || { enable: false, title: "", list: [] };
+---
+
+{
+  enable && (
+    <section class="section">
+      <div class="container">
+        <div class="section-container">
+          <div class="section-intro centralize">
+            <h2 data-aos="fade-up-sm" data-aos-delay="0" set:html={markdownify(title)} class="title hasEmphasize" />
+          </div>
+          <div class="section-content">
+            <!-- Gallery Section -->
+        {
+          list.filter((f) => f.enable).length > 0 && (
+            <div class="grid sm:grid-cols-3 grid-rows-2 gap-4 md:gap-6">
+              {list.map((item) => (
+                <div
+                data-aos="zoom-out-sm" data-aos-delay="0"
+                  style={`grid-column: span ${item.col_span} / span ${item.col_span}; grid-row: span ${item.row_span} / span ${item.row_span};`}
+                  class="rounded-lg md:rounded-2xl overflow-hidden "
+                >
+                  <ImageMod
+                    width={item.width}
+                    height={item.height}
+                    src={item.src}
+                    alt={item.alt}
+                    class="size-full object-cover "
+                  />
+                </div>
+              ))}
+            </div>
+          )
+        }
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

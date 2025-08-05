@@ -1,0 +1,63 @@
+---
+import ImageMod from "./ImageMod.astro";
+
+const { testimonial } = Astro.props;
+---
+
+<div class="bg-white rounded-3xl-sm p-8 lg:px-11 lg:py-14">
+  {/* Profile Area */}
+  <div class="flex gap-4 items-center">
+    <ImageMod
+      src={testimonial.avatar}
+      alt={testimonial.name}
+      width={100}
+      height={100}
+      quality="high"
+      class="rounded-full w-16 aspect-square object-cover bg-secondary/30"
+    />
+    <div>
+      <h4 class="text-h6 mb-1">{testimonial.name}</h4>
+      <p class="text-text-light">{testimonial.designation}</p>
+    </div>
+  </div>
+
+  {/* Testimonial Area */}
+  <div class="mt-14">
+    <p class="text-h5-sm text-text-dark text-balance">
+      "{testimonial.content}"
+    </p>
+  </div>
+
+  {/* Rating Area */}
+  <div class="mt-14">
+    <div class="flex items-center gap-1">
+      {
+        [...Array(testimonial.rating.stars).fill("")].map((_) => (
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M10 0L13.2138 6.09124L20 7.26542L15.2 12.2042L16.1803 19.0211L10 15.9822L3.81966 19.0211L4.8 12.2042L0 7.26542L6.78622 6.09124L10 0Z"
+              fill="#FFB443"
+            />
+          </svg>
+        ))
+      }
+    </div>
+    <div class="flex items-center gap-10 mt-5 justify-between flex-wrap">
+      <p>{testimonial.rating.stars} Reviews from</p>
+      <ImageMod
+        src={testimonial.rating.company}
+        alt=""
+        width={100}
+        height={20}
+        quality="high"
+        class="inline-block h-8 w-auto"
+      />
+    </div>
+  </div>
+</div>

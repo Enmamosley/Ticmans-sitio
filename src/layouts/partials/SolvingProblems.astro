@@ -1,0 +1,77 @@
+---
+import { markdownify } from "@/lib/utils/textConverter";
+import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
+
+const sectionData = (await getEntry(
+  "solvingProblemsSectionCollection",
+  "solving-problems"
+)) as CollectionEntry<"solvingProblemsSectionCollection">;
+
+const { enable, title, list } = sectionData.data;
+---
+
+{
+  enable && (
+    <section class="section">
+      <div class="container">
+        <div class="section-container">
+          <div class="section-intro centralize">
+            {title && (
+              <h2
+                class="title hasEmphasize"
+                data-aos="fade-up-sm"
+                data-aos-delay="0"
+                set:html={markdownify(title)}
+              />
+            )}
+          </div>
+          <div
+            class="section-content"
+            data-aos="fade-up-sm"
+            data-aos-delay="100"
+          >
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {list.length &&
+                list.map((item, index) => {
+                  if (item.enable !== true) return;
+                  const aosDelay = 100 * (index % 3);
+                  return (
+                    <div
+                      data-aos="fade-up-sm"
+                      data-aos-delay={aosDelay}
+                      class="group p-6 xl:p-10 colorize rounded-xl xl:rounded-3xl"
+                    >
+                      <div class="flex h-full flex-col gap-10 lg:gap-16 justify-between">
+                        {/* LOGO */}
+                        <div class="rounded-full p-4 bg-white inline-block self-start   border-2 border-border transition-all duration-300">
+                          <img src={item.svgIcon} alt="" class="w-11 h-11 " />
+                        </div>
+                        {/* CONTENT */}
+                        <div>
+                          <h3
+                            class="text-h4-sm mb-6 text-text-dark font-medium "
+                            set:html={markdownify(item.title)}
+                          />
+                          <p set:html={markdownify(item.subtitle)} />
+
+                          {item.button.enable && (
+                            <a
+                              href={item.button.link}
+                              class="btn-sm btn-outline-secondary translate-y-1 font-medium rounded-full inline-block leading-none mt-12"
+                            >
+                              {item.button.label}
+                            </a>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

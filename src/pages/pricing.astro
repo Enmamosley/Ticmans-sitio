@@ -1,0 +1,47 @@
+---
+import Base from "@/layouts/Base.astro";
+import CallToAction from "@/partials/CallToAction.astro";
+import ComparePlans from "@/partials/ComparePlans.astro";
+import FaqSection from "@/partials/FaqSection.astro";
+import PageHeader from "@/partials/PageHeader.astro";
+import PricingSection from "@/partials/PricingSection.astro";
+import Statistics from "@/partials/Statistics.astro";
+import TrustedBrands from "@/partials/TrustedBrands.astro";
+import { getEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+
+const pageIndex = await getEntry("pricing", "-index");
+if (!pageIndex) return null;
+const { hero } = pageIndex.data;
+
+const pricingSectionData = await getEntry(
+  "pricingSectionCollection",
+  "pricing"
+) as CollectionEntry<"pricingSectionCollection">;
+
+const { enable } = pricingSectionData.data;
+---
+
+<Base {...hero}>
+  <PageHeader title={hero.title} isCenter={true} />
+  {enable ? (
+    <div class="ph-merged-section -mt-10">
+      <PricingSection isPageHeader={true} />
+    </div>
+  ) : (
+    <div class="section">
+      <div class="container">
+        <div class="text-center">
+          <h2 class="mb-6">Precios Personalizados</h2>
+          <p class="mb-8">Contáctanos para obtener una cotización personalizada según tus necesidades específicas.</p>
+          <a href="/contact" class="btn btn-primary">Solicitar Cotización</a>
+        </div>
+      </div>
+    </div>
+  )}
+  <TrustedBrands />
+  <ComparePlans />
+  <Statistics isFluid="true" />
+  <FaqSection />
+  <CallToAction />
+</Base>

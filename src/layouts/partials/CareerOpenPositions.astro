@@ -1,0 +1,172 @@
+---
+import { getSinglePage } from "@/lib/contentParser.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import type { CollectionEntry } from "astro:content";
+
+const open_positions = Astro.props
+  .open_positions as CollectionEntry<"careers">["data"]["open_positions"];
+
+const { enable, title } = open_positions || { enable: false, title: "" };
+
+const COLLECTION_FOLDER = "careers";
+const allPositions = await getSinglePage(COLLECTION_FOLDER);
+const sortedPositionsByDate = allPositions.sort(
+  (a, b) =>
+    new Date(b.data.date || "").getTime() -
+    new Date(a.data.date || "").getTime()
+);
+---
+
+{
+  enable && (
+    <section class="section-box bg-secondary/20" id="open-positions">
+      <div class="container">
+        <div class="section-container">
+          <div class="section-intro centralize">
+            <h2
+              set:html={markdownify(title)}
+              data-aos="fade-up-sm"
+              data-aos-delay="0"
+              class="title hasEmphasize"
+            />
+          </div>
+          <div class="section-content">
+            {/* POSITIONS */}
+
+            <div class="grid md:grid-cols-2 gap-6">
+              {sortedPositionsByDate.length &&
+                sortedPositionsByDate.map((position, index) => {
+                  const aosDelay = 100 * (index % 2);
+                  return (
+                    <div data-aos="fade-up-sm" data-aos-delay={aosDelay}>
+                      <div class="p-10 rounded-2xl hover:shadow-4xl transition-shadow duration-300 bg-white">
+                        <div class="flex flex-wrap gap-4 mb-5">
+                          <div class="flex items-center gap-2">
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 16 16"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="text-primary"
+                            >
+                              <g clip-path="url(#clip0_2092_2009)">
+                                <path
+                                  d="M8.00131 15.3327C6.55091 15.3327 5.13308 14.9026 3.92712 14.0968C2.72116 13.291 1.78123 12.1457 1.22619 10.8057C0.671146 9.46571 0.525922 7.99122 0.80888 6.56869C1.09184 5.14616 1.79027 3.83949 2.81586 2.8139C3.84144 1.78832 5.14812 1.08989 6.57064 0.806927C7.99317 0.523969 9.46766 0.669193 10.8077 1.22424C12.1476 1.77928 13.293 2.71921 14.0988 3.92517C14.9045 5.13113 15.3346 6.54896 15.3346 7.99935C15.3346 9.94427 14.562 11.8095 13.1868 13.1848C11.8115 14.5601 9.94623 15.3327 8.00131 15.3327ZM8.00131 1.99935C6.81462 1.99935 5.65458 2.35125 4.66788 3.01053C3.68119 3.66982 2.91215 4.60689 2.45803 5.70325C2.0039 6.79961 1.88508 8.00601 2.11659 9.16989C2.34811 10.3338 2.91955 11.4029 3.75866 12.242C4.59778 13.0811 5.66688 13.6526 6.83076 13.8841C7.99465 14.1156 9.20105 13.9968 10.2974 13.5426C11.3938 13.0885 12.3308 12.3195 12.9901 11.3328C13.6494 10.3461 14.0013 9.18604 14.0013 7.99935C14.0013 6.40805 13.3692 4.88193 12.2439 3.75671C11.1187 2.63149 9.5926 1.99935 8.00131 1.99935ZM9.94797 10.7194C9.86023 10.7199 9.77326 10.703 9.69203 10.6699C9.61081 10.6367 9.53693 10.5878 9.47464 10.526L7.52797 8.57269C7.40481 8.44851 7.33538 8.28091 7.33464 8.10602V3.99935C7.33464 3.82254 7.40488 3.65297 7.5299 3.52795C7.65493 3.40292 7.82449 3.33269 8.00131 3.33269C8.17812 3.33269 8.34769 3.40292 8.47271 3.52795C8.59773 3.65297 8.66797 3.82254 8.66797 3.99935V7.82602L10.4213 9.57935C10.4838 9.64133 10.5334 9.71506 10.5672 9.7963C10.6011 9.87754 10.6185 9.96468 10.6185 10.0527C10.6185 10.1407 10.6011 10.2278 10.5672 10.3091C10.5334 10.3903 10.4838 10.464 10.4213 10.526C10.359 10.5878 10.2851 10.6367 10.2039 10.6699C10.1227 10.703 10.0357 10.7199 9.94797 10.7194Z"
+                                  fill="currentColor"
+                                />
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_2092_2009">
+                                  <rect width="16" height="16" fill="white" />
+                                </clipPath>
+                              </defs>
+                            </svg>
+
+                            <span class="font-semibold text-text-dark/80">
+                              {position.data.duration}
+                            </span>
+                          </div>
+                          <div class="flex items-center gap-2">
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 16 16"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                              class="text-primary"
+                            >
+                              <g clip-path="url(#clip0_2092_2129)">
+                                <mask
+                                  id="mask0_2092_2129"
+                                  style="mask-type:luminance"
+                                  maskUnits="userSpaceOnUse"
+                                  x="0"
+                                  y="0"
+                                  width="16"
+                                  height="16"
+                                >
+                                  <path d="M16 0H0V16H16V0Z" fill="white" />
+                                </mask>
+                                <g mask="url(#mask0_2092_2129)">
+                                  <mask
+                                    id="mask1_2092_2129"
+                                    style="mask-type:luminance"
+                                    maskUnits="userSpaceOnUse"
+                                    x="0"
+                                    y="0"
+                                    width="16"
+                                    height="16"
+                                  >
+                                    <path
+                                      d="M0 9.53674e-07H16V16H0V9.53674e-07Z"
+                                      fill="white"
+                                    />
+                                  </mask>
+                                  <g mask="url(#mask1_2092_2129)">
+                                    <path
+                                      d="M15.375 8C15.375 12.1421 12.1422 15.375 8 15.375C3.85784 15.375 0.625 12.1421 0.625 8C0.625 3.85788 3.85784 0.625001 8 0.625001C12.1422 0.625001 15.375 3.85788 15.375 8Z"
+                                      stroke="currentColor"
+                                      stroke-miterlimit="10"
+                                    />
+                                    <path
+                                      d="M8 2.375V13.625"
+                                      stroke="currentColor"
+                                      stroke-miterlimit="10"
+                                    />
+                                    <path
+                                      d="M7.375 8H8.625C9.66053 8 10.5 8.83947 10.5 9.875C10.5 10.9105 9.66053 11.75 8.625 11.75H7.375C6.33947 11.75 5.5 10.9105 5.5 9.875"
+                                      stroke="currentColor"
+                                      stroke-miterlimit="10"
+                                    />
+                                    <path
+                                      d="M8.625 8H7.375C6.33947 8 5.5 7.16053 5.5 6.125C5.5 5.08947 6.33947 4.25 7.375 4.25H8.625C9.66053 4.25 10.5 5.08947 10.5 6.125"
+                                      stroke="currentColor"
+                                      stroke-miterlimit="10"
+                                    />
+                                  </g>
+                                </g>
+                              </g>
+                              <defs>
+                                <clipPath id="clip0_2092_2129">
+                                  <rect width="16" height="16" fill="white" />
+                                </clipPath>
+                              </defs>
+                            </svg>
+
+                            <span class="font-semibold text-text-dark/80">
+                              {position.data.salary}
+                            </span>
+                          </div>
+                        </div>
+
+                        <h3
+                          class="text-h5 font-medium mb-2 [&>em]:not-italic"
+                          set:html={markdownify(position.data.title)}
+                        />
+                        <p
+                          class="text-text-dark/80 text-base"
+                          set:html={markdownify(
+                            position.data.description || ""
+                          )}
+                        />
+
+                        {position.data.apply_button?.enable && (
+                          <a
+                            href={"careers/" + position.slug}
+                            class="btn btn-outline-text-dark rounded-full py-2 font-medium mt-10"
+                          >
+                            {position.data.apply_button.label}
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

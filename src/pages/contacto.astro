@@ -1,0 +1,185 @@
+---
+import config from "@/config/config.json";
+import Base from "@/layouts/Base.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import PageHeader from "@/partials/PageHeader.astro";
+import { getEntry } from "astro:content";
+
+const pageIndex = await getEntry("contact", "-index");
+if (!pageIndex) return null;
+const { contact_form_action, gmap } = config.params;
+---
+
+<Base {...pageIndex.data}>
+  <PageHeader
+    title={pageIndex.data.title}
+    subtitle={pageIndex.data.description}
+  />
+
+  {
+    gmap.enable && (
+      <section class="ph-merged-section">
+        <div class="container">
+          <iframe
+            data-aos="fade-up-sm"
+            data-aos-delay="100"
+            class="w-full rounded-3xl bg-light"
+            src={gmap.gmap_url}
+            width="600"
+            height="450"
+            style="border:0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          />
+        </div>
+      </section>
+    )
+  }
+
+  <section class={gmap.enable ? "section" : "section pt-24 xl:pt-40"}>
+    <div class="container" data-aos="fade-up-sm" data-aos-delay="0">
+      <div class="grid lg:grid-cols-2 xl:grid-cols-5 gap-10 xl: lg:gap-14">
+        <div class="col-span-1 xl:col-span-2">
+          <h3 class="font-secondary pb-9 leading-none">
+            Completa el formulario y contáctanos.
+          </h3>
+          {
+            config.params.contact_info.map((contact) => (
+              <div class="pb-6 last:pb-0">
+                <p
+                  class="text-sm font-medium pb-2.5 text-text"
+                  set:html={markdownify(contact.title)}
+                />
+                {contact.location && (
+                  <p
+                    class="text-text mb-1"
+                    set:html={markdownify(contact.location)}
+                  />
+                )}
+                {contact.label && contact.link && (
+                  <a
+                    href={contact.link}
+                    target="_blank"
+                    class="text-primary inline-flex items-center gap-1 font-secondary hover:text-primary/80 transition duration-300"
+                    aria-label={contact.label}
+                  >
+                    <span>{contact.label}</span>
+                    <svg
+                      width="16"
+                      height="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      class="text-xl -rotate-45 "
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2.5"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                      />
+                    </svg>
+                  </a>
+                )}
+
+                {contact.content && contact.link && (
+                  <a
+                    href={contact.link}
+                    target="_blank"
+                    class="hover:text-primary transition duration-300"
+                    aria-label={contact.content}
+                  >
+                    {contact.content}
+                  </a>
+                )}
+              </div>
+            ))
+          }
+        </div>
+        <div class="col-span-1 xl:col-span-3">
+          <h2 class="text-xl font-semibold pb-14">Contáctanos:</h2>
+          <form 
+            action="https://formsubmit.co/enmamosley@gmail.com" 
+            method="POST"
+            data-astro-reload
+          >
+            {/* FormSubmit Configuration */}
+            <input type="hidden" name="_subject" value="Nuevo contacto desde Ticmans - Página de Contacto" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_next" value="https://ticmans.com/gracias" />
+            <input type="hidden" name="origen" value="Página de Contacto" />
+            <div class="row">
+              <div class="col-12 pb-6">
+                <label class="form-label" for="name">Tu Nombre</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  required
+                  placeholder="Escribe tu nombre"
+                  class="form-input border border-border bg-light"
+                />
+              </div>
+              <div class="xl:col-6 pb-6">
+                <label class="form-label" for="email">Tu Correo Electrónico</label>
+                <input
+                  type="text"
+                  id="email"
+                  name="email"
+                  required
+                  placeholder="Ingresa tu correo electrónico"
+                  class="form-input border border-border bg-light"
+                />
+              </div>
+              <div class="xl:col-6 pb-6">
+                <label class="form-label" for="phone"
+                  >Tu Teléfono
+                  <span class="text-text-light">(Opcional)</span></label
+                >
+                <input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  placeholder="Escribe tu número de teléfono"
+                  class="form-input border border-border bg-light"
+                />
+              </div>
+              <div class="col-12 pb-6">
+                <label class="form-label" for="service">Seleccionar Servicio</label>
+                <select
+                  name="service"
+                  id="service"
+                  class="form-input border border-border bg-light text-text-light/80 font-medium"
+                >
+                  <option selected disabled>Seleccionar Servicio</option>
+                  {
+                    pageIndex.data.services &&
+                      pageIndex.data.services.length > 0 &&
+                      pageIndex.data.services.map((service) => (
+                        <option value={service.value}>{service.option}</option>
+                      ))
+                  }
+                </select>
+              </div>
+              <div class="col-12 pb-6">
+                <label class="form-label" for="message">Enviar Mensaje</label>
+                <textarea
+                  name="message"
+                  id="message"
+                  placeholder="Escribe tu mensaje"
+                  class="form-input border border-border bg-light h-44"
+                ></textarea>
+              </div>
+            </div>
+            <button class="btn btn-primary rounded-lg font-semibold px-5"
+              >Enviar Mensaje</button
+            >
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,25 @@
+---
+import Base from "@/layouts/Base.astro";
+import CallToAction from "@/partials/CallToAction.astro";
+import CareerBenifitsAndParks from "@/partials/CareerBenifitsAndParks.astro";
+import CareerHero from "@/partials/CareerHero.astro";
+import CareerOpenPositions from "@/partials/CareerOpenPositions.astro";
+import CareerQuickGlanceGallery from "@/partials/CareerQuickGlanceGallery.astro";
+import FaqSection from "@/partials/FaqSection.astro";
+import Statistics from "@/partials/Statistics.astro";
+import { getEntry } from "astro:content";
+
+const pageIndex = await getEntry("careers", "-index");
+if (!pageIndex) return null;
+const { hero, benefits_and_parks, quick_glance_gallery, open_positions } = pageIndex.data;
+---
+
+<Base {...pageIndex.data}>
+  <CareerHero hero={hero} />
+  <Statistics />
+  <CareerBenifitsAndParks benefits_and_parks={benefits_and_parks} />
+  <CareerQuickGlanceGallery quick_glance_gallery={quick_glance_gallery} />
+  <CareerOpenPositions open_positions={open_positions} />
+  <FaqSection />
+  <CallToAction />
+</Base>

@@ -1,0 +1,70 @@
+{
+  "site": {
+    "title": "Ticmans",
+    "base_url": "https://ticmans.com",
+    "base_path": "/",
+    "trailing_slash": false,
+    "favicon": "/images/favicon.png",
+    "logo": "/images/logo.png",
+    "logo_width": "167",
+    "logo_height": "78",
+    "logo_text": "Ticamans"
+  },
+
+  "settings": {
+    "sticky_header": false,
+    "default_theme": "system",
+    "pagination": 6,
+    "summary_length": 180,
+    "blog_folder": "blog"
+  },
+
+  "params": {
+    "contact_form_action": "#",
+    "free_trial_form_action": "#",
+    "copyright": "© {year} Ticmans. Todos los derechos reservados",
+    "footer_newsletter_consent": "Acepto la política de privacidad",
+    "footer_descriptions": "Ofrecemos soluciones integrales para pequeñas y medianas empresas. Sea cual sea tu trabajo, podemos ayudarte",
+    "contact_info": [
+      {
+        "title": "Ubicación",
+        "location": "Canadá 430, Vista Hermosa, 64620 Monterrey, N.L. México",
+        "label": "Abrir mapa",
+        "link": "https://maps.app.goo.gl/E1iBdHnPheA92i3YA"
+      },
+      {
+        "title": "Número de teléfono",
+        "content": "8125270048",
+        "link": "tel:+8125270048"
+      },
+      {
+        "title": "Correo electrónico",
+        "content": "contacto@ticmans.com",
+        "link": "mailto:contacto@ticmans.com"
+      }
+    ],
+    "gmap": {
+      "enable": true,
+      "gmap_url": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14381.50075614734!2d-100.37219136335892!3d25.69199894165725!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8662960ba3338717%3A0x97a53db1bd7aa7b9!2sCanad%C3%A1%20430%2C%20Vista%20Hermosa%2C%2064620%20Monterrey%2C%20N.L.!5e0!3m2!1sen!2smx!4v1753909660351!5m2!1sen!2smx"
+    }
+  },
+
+  "navigation_buttons": [
+    {
+      "enable": false,
+      "label": "Contáctanos",
+      "link": "/contact"
+    },
+    {
+      "enable": true,
+      "label": "Iniciar sesión",
+      "link": "https://app.ticmans.com/"
+    }
+  ],
+
+  "metadata": {
+    "meta_author": "Mosley",
+    "meta_image": "/images/og-image.png",
+    "meta_description": "Sitio de ticsmans"
+  }
+}

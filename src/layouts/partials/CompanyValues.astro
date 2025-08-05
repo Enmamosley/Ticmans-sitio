@@ -1,0 +1,65 @@
+---
+import { markdownify } from "@/lib/utils/textConverter";
+import type { CollectionEntry } from "astro:content";
+
+const { values } = Astro.props;
+
+const { enable, title, list } =
+  values as CollectionEntry<"company">["data"]["values"];
+---
+
+{
+  enable && (
+    <section class="section-box bg-secondary/20">
+      <div class="container">
+        <div class="section-container">
+          <div class="section-intro centralize">
+            <h2
+              class="title hasEmphasize"
+              data-aos="fade-up-sm"
+              data-aos-delay="100"
+              set:html={title}
+            />
+          </div>
+          <div class="section-content">
+            <div class="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {list.length &&
+                list.map((item, index) => {
+                  const aosDelay = 100 * (index % 3);
+                  return (
+                    <div data-aos="fade-up-sm" data-aos-delay={aosDelay}>
+                      <div class="group p-6 xl:p-10 hover:shadow-4xl shadow-md rounded-xl xl:rounded-3xl !bg-white transition-shadow duration-300 h-full">
+                        <div class="flex h-full flex-col gap-10 lg:gap-16 justify-between">
+                          {/* LOGO */}
+                          <div class="rounded-full overflow-hidden">
+                            <img src={item.logo} class="w-16 h-16 " />
+                          </div>
+                          {/* CONTENT */}
+                          <div>
+                            <h3
+                              class="text-h4-sm mb-6 text-text-dark font-medium "
+                              set:html={markdownify(item.title)}
+                            />
+                            <p set:html={markdownify(item.description)} />
+
+                            {item.button.enable && (
+                              <a
+                                href={item.button.link}
+                                class="btn-sm btn-outline-secondary translate-y-1 font-medium rounded-full inline-block leading-none mt-12"
+                              >
+                                {item.button.label}
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

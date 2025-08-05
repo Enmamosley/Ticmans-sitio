@@ -1,0 +1,20 @@
+<svg width="36" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g clip-path="url(#peoplesYellow-a)">
+    <mask id="peoplesYellow-b" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="2" width="36" height="32">
+      <path d="M18 14.562a6.059 6.059 0 1 0 0-12.117 6.059 6.059 0 0 0 0 12.117ZM30.257 14.562a3.83 3.83 0 1 0 0-7.66 3.83 3.83 0 0 0 0 7.66ZM5.743 14.562a3.83 3.83 0 1 0 0-7.66 3.83 3.83 0 0 0 0 7.66ZM9.517 18.002C8.009 16.766 6.643 16.93 4.9 16.93c-2.607 0-4.729 2.109-4.729 4.7v7.606c0 1.125.919 2.04 2.048 2.04 4.877 0 4.29.088 4.29-.21 0-5.39-.639-9.342 3.008-13.064Z" fill="#F4C553"/>
+      <path d="M19.658 16.958c-3.045-.254-5.692.003-7.975 1.887-3.82 3.06-3.085 7.18-3.085 12.221a2.443 2.443 0 0 0 2.44 2.44c14.7 0 15.285.473 16.156-1.457.286-.653.208-.445.208-6.69 0-4.961-4.295-8.401-7.744-8.401ZM31.1 16.93c-1.753 0-3.111-.161-4.617 1.072 3.619 3.695 3.008 7.378 3.008 13.065 0 .3-.488.21 4.216.21a2.12 2.12 0 0 0 2.121-2.113v-7.533c0-2.592-2.121-4.7-4.728-4.7Z" fill="#F4C553"/>
+    </mask>
+    <g mask="url(#peoplesYellow-b)">
+      <path fill="url(#peoplesYellow-c)" d="M.171.171h35.657v35.657H.171z"/>
+    </g>
+  </g>
+  <defs>
+    <linearGradient id="peoplesYellow-c" x1="13.886" y1="4.971" x2="41.075" y2="33.172" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4C553"/>
+      <stop offset="1" stop-color="#E69940"/>
+    </linearGradient>
+    <clipPath id="peoplesYellow-a">
+      <path fill="#fff" transform="translate(.171 .171)" d="M0 0h35.657v35.657H0z"/>
+    </clipPath>
+  </defs>
+</svg>

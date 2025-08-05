@@ -1,0 +1,92 @@
+---
+import Base from "@/layouts/Base.astro";
+import dateFormat from "@/lib/utils/dateFormat";
+import PageHeader from "@/partials/PageHeader.astro";
+import { getEntry } from "astro:content";
+
+const pageIndex = await getEntry("changelog", "-index");
+if (!pageIndex) return null;
+
+const { title, changelog, description } = pageIndex?.data;
+---
+
+<Base {...pageIndex.data}>
+  <PageHeader title={title} subtitle={description} />
+  <section class="ph-merged-section">
+    <div class="container container--ph-merged">
+      <div data-aos="fade-up-sm" data-aos-delay="200">
+        {
+          changelog &&
+            changelog.map((entry) => (
+              <div class="section-content custom-mt-16">
+                <div class="md:flex items-start">
+                  <div class="w-[280px] pb-8 md:pr-8 md:pb-16">
+                    <p
+                      class="text-lg font-medium text-text-dark leading-5"
+                      set:html={dateFormat(entry.date, " MMM dd, yyyy")}
+                    />
+                  </div>
+                  <div class="relative pb-10 md:pl-8 md:pb-16 lg:border-l border-border w-full">
+                    <p class="lg:bullet text-3xl font-bold text-primary leading-5">
+                      {entry.version}
+                    </p>
+                  </div>
+                </div>
+
+                {entry.changed && (
+                  <div class="md:flex items-start">
+                    <div class="w-[280px] md:pr-8 pb-10 md:sticky md:top-20">
+                      <p class="font-medium text-primary bg-primary/10 inline-block px-5 py-1 rounded-3xl">
+                        Changed
+                      </p>
+                    </div>
+                    <div class="md:pl-8 pb-6 lg:border-l border-border w-full ">
+                      <ul class="list-disc list-outside border border-primary p-6 pl-9 sm:p-9 sm:pl-14 rounded-xl sm:rounded-2xl space-y-2 text-text-dark/70 marker:text-primary bg-blue-200/5">
+                        {entry.changed.map((change) => (
+                          <li>{change}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+
+                {entry.improvement && (
+                  <div class="md:flex items-start">
+                    <div class="w-[280px] md:pr-8 pb-10 ">
+                      <p class="font-medium text-green-600 bg-green-100 inline-block px-5 py-1 rounded-3xl">
+                        Improvement
+                      </p>
+                    </div>
+                    <div class="md:pl-8 pb-6 lg:border-l border-border w-full">
+                      <ul class="list-disc list-outside border border-green-500 p-6 pl-10 sm:p-10 sm:pl-14 rounded-xl sm:rounded-2xl space-y-2 text-text-dark/70 marker:text-green-600 bg-green-100/5">
+                        {entry.improvement.map((improve) => (
+                          <li>{improve}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+
+                {entry.removed && (
+                  <div class="md:flex items-start">
+                    <div class="w-[280px] md:pr-8 custom-pb-10 pb-10 md:sticky md:top-20">
+                      <p class="font-medium text-red-600 bg-red-100 inline-block px-5 py-1 rounded-3xl">
+                        Removed
+                      </p>
+                    </div>
+                    <div class="md:pl-8 custom-pb-10 pb-10 lg:border-l border-border w-full">
+                      <ul class="list-disc list-outside border border-red-500 p-6 pl-10 sm:p-10 sm:pl-14 rounded-xl sm:rounded-2xl space-y-2 text-text-dark/70 marker:text-red-600 bg-red-200/5">
+                        {entry.removed.map((remove) => (
+                          <li>{remove}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>

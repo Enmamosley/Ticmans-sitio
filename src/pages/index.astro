@@ -1,0 +1,37 @@
+---
+import { getEntry } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import AvailableCountries from "@/components/AvailableCountries.astro";
+import TeamMembers from "@/components/TeamMembers.astro";
+import Base from "@/layouts/Base.astro";
+import BenefitsCarousel from "@/partials/BenefitsCarousel.astro";
+import CallToAction from "@/partials/CallToAction.astro";
+import HomeBanner from "@/partials/HomeBanner.astro";
+import Integrations from "@/partials/Integrations.astro";
+import OurServices from "@/partials/OurServices.astro";
+import PricingSection from "@/partials/PricingSection.astro";
+import SolvingProblems from "@/partials/SolvingProblems.astro";
+import TestimonialSection from "@/partials/TestimonialSection.astro";
+import TrustedBrands from "@/partials/TrustedBrands.astro";
+
+const pricingSectionData = await getEntry(
+  "pricingSectionCollection",
+  "pricing"
+) as CollectionEntry<"pricingSectionCollection">;
+
+const { enable } = pricingSectionData.data;
+---
+
+<Base>
+  <HomeBanner />
+  <TrustedBrands />
+  <OurServices />
+  <SolvingProblems />
+  <BenefitsCarousel />
+  <TestimonialSection />
+  <TeamMembers />
+  <AvailableCountries />
+  {enable && <PricingSection isPageHeader={false} />}
+  <Integrations />
+  <CallToAction />
+</Base>

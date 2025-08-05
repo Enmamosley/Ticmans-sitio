@@ -1,0 +1,43 @@
+{
+  "main": [
+    {
+      "name": "Inicio",
+      "url": "/"
+    },
+    {
+      "name": "Servicios",
+      "url": "/servicios"
+    },
+    {
+      "name": "Blog",
+      "url": "/blog"
+    },
+
+    {
+  "name": "Sobre nosotros",
+  "url": "/sobre-nosotros"
+    },
+    {
+      "name": "Contacto",
+      "url": "/contacto"
+    }
+  ],
+  "footer": [
+    {
+      "name": "Servicios",
+      "url": "/servicios"
+    },
+    {
+      "name": "Contacto",
+      "url": "/contacto"
+    },
+    {
+      "name": "Sobre nosotros",
+      "url": "/sobre-nosotros"
+    },
+    {
+      "name": "Blog",
+      "url": "/blog"
+    }
+  ]
+}

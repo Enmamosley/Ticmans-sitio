@@ -1,0 +1,88 @@
+---
+import ImageMod from "@/components/ImageMod.astro";
+import config from "@/config/config.json";
+import { markdownify } from "@/lib/utils/textConverter";
+import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
+
+const sectionData = (await getEntry(
+  "ctaSectionCollection",
+  "call-to-action"
+)) as CollectionEntry<"ctaSectionCollection">;
+const { enable, title, description, image, freeTrial } = sectionData.data;
+const { free_trial_form_action } = config.params;
+---
+
+{
+  enable && (
+    <section class="cta pt-32  mb-0">
+      <div class="container bg-[#CFD4FA] rounded-3xl">
+        <div class="flex flex-col lg:flex-row">
+          <div class="p-8 lg:px-20 lg:py-16 lg:w-[50%]">
+            <h2
+              class="mb-4"
+              data-aos="fade-up-sm"
+              data-aos-delay="0"
+              set:html={markdownify(title)}
+            />
+            <p
+              set:html={markdownify(description)}
+              data-aos="fade-up-sm"
+              data-aos-delay="100"
+            />
+            {freeTrial.enable && (
+              <form
+                id="ctaForm"
+                action="https://formsubmit.co/enmamosley@gmail.com"
+                method="POST"
+                data-aos="fade-in-sm"
+                data-aos-delay="200"
+                data-astro-reload
+                class="mt-10 flex flex-col sm:flex-row items-stretch gap-3 w-full"
+              >
+                {/* FormSubmit Configuration */}
+                <input type="hidden" name="_subject" value="Nueva consulta desde Ticmans" />
+                <input type="hidden" name="_template" value="table" />
+                <input type="hidden" name="_captcha" value="false" />
+                <input type="hidden" name="_next" value="https://ticmans.com/gracias" />
+                
+                {/* Form Fields */}
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder={freeTrial.placeholder}
+                  required
+                  class="bg-light self-stretch h-16 xl:h-[4.3rem] rounded-lg border-none w-full sm:max-w-[370px] px-6 placeholder:text-lg"
+                />
+                <input type="hidden" name="origen" value="Call to Action" />
+                
+                <button
+                  type="submit"
+                  class="btn btn-primary rounded-lg font-semibold min-w-max"
+                >
+                  {freeTrial.title}
+                </button>
+              </form>
+            )}
+          </div>
+          <div
+            class="relative lg:w-[50%] hidden lg:block"
+            data-aos="zoom-out-sm"
+            data-aos-delay="200"
+          >
+            <ImageMod
+              width={800}
+              height={800}
+              src={image}
+              alt="Call to Action"
+              class="lg:absolute bottom-0 right-0 xl:max-w-[600px] translate-x-6"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+

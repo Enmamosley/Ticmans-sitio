@@ -1,0 +1,191 @@
+---
+import Logo from "@/components/Logo.astro";
+import Social from "@/components/Social.astro";
+import config from "@/config/config.json";
+import menu from "@/config/menu.json";
+import social from "@/config/social.json";
+
+import { markdownify } from "@/lib/utils/textConverter";
+
+const { footer } = menu;
+// Function to replace {year} this from string to year
+function replaceYear(text: string) {
+  const year = new Date().getFullYear();
+
+  return text.replace("{year}", year.toString());
+}
+---
+
+<footer class="bg-light pt-16 xl:pt-24">
+  <div class="container mx-auto">
+    <div class="w-full md:max-w-[calc(100%-100px)] mx-auto">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 justify-between gap-10">
+        <div class="col-span-1" data-aos="fade-up-sm" data-aos-delay="0">
+          <div class="mb-10">
+            <Logo />
+          </div>
+          <p
+            class="mb-2.5 lg:mb-6 text-base"
+            set:html={markdownify(config.params.footer_descriptions)}
+          />
+          <Social source={social.main} className="flex gap-5" />
+          <form 
+            action="https://formsubmit.co/enmamosley@gmail.com" 
+            method="POST"
+            data-astro-reload
+          >
+            {/* FormSubmit Configuration */}
+            <input type="hidden" name="_subject" value="Nueva suscripción al newsletter - Ticmans" />
+            <input type="hidden" name="_template" value="table" />
+            <input type="hidden" name="_captcha" value="false" />
+            <input type="hidden" name="_next" value="https://ticmans.com/gracias" />
+            <input type="hidden" name="origen" value="Newsletter Footer" />
+            <div
+              class="flex justify-between rounded-lg bg-white px-3 py-2 border border-border mb-5 mt-14"
+            >
+              <input
+                type="email"
+                name="email"
+                placeholder="Enter your email"
+                class="form-input w-full rounded-full !border-transparent bg-transparent! py-2! pl-2! placeholder:!opacity-100 placeholder:font-normal"
+                required
+              />
+              <button
+                title="Subscribe"
+                class="transition hover:opacity-80 pr-2"
+                type="submit"
+              >
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M17.1772.0665905C17.3647-.0359303 17.5912-.0187131 17.7637.108851 17.9362.237198 18.0247.454761 17.994.673889L15.9315 15.152C15.9067 15.3234 15.81 15.476 15.6675 15.5668 15.5782 15.6231 15.477 15.6521 15.375 15.6521 15.3135 15.6521 15.252 15.6411 15.1935 15.6208L7.33126 12.8167 15.0622 3.09761 5.07152 12.0114.380282 10.3382C.168033 10.2623.0187833 10.062.00153335 9.8272-.0149666 9.5932.102783 9.37094.302282 9.26216L17.1772.0665905zM6.56261 17.413V13.7833l3.05024 1.0879-2.03474 2.8893C7.47011 17.9139 7.30061 18 7.12511 18 7.06661 18 7.00736 17.9906 6.94961 17.971 6.71861 17.8912 6.56261 17.6666 6.56261 17.413z"
+                    fill="#070127"></path>
+                </svg>
+              </button>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <input
+                type="checkbox"
+                name="checkbox"
+                id="checkbox"
+                required
+                class="rounded-sm"
+              />
+              <label for="checkbox" class="text-sm" style="line-height:normal"
+                ><span class="text-text-light font-secondary"
+                  >I agree with
+                </span><a
+                  href="/privacy-policy"
+                  class="hover:text-primary transition duration-300"
+                  >privacy policy</a
+                ></label
+              >
+            </div>
+          </form>
+        </div>
+        <div class="col-span-1" data-aos="fade-up-sm" data-aos-delay="100">
+          <div
+            class="flex flex-wrap gap-y-6 sm:flex-nowrap md:justify-end lg:justify-around md:mt-4"
+          >
+            <div class="w-[160px]">
+              <h3 class="mb-9 text-lg text-text-dark font-medium">
+                Navegación
+              </h3>
+              <ul class="flex flex-col gap-5">
+                {
+                  footer.map((item) => (
+                    <li>
+                      <a class="transition hover:text-primary" href={item.url}>
+                        {item.name}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="col-span-1 lg:mt-4"
+          data-aos="fade-up-sm"
+          data-aos-delay="150"
+        >
+          <h3 class="mb-9 text-xl md:text-lg text-text-dark font-medium">
+            Contacto
+          </h3>
+          {
+            config.params.contact_info.map((contact) => (
+              <div class="pb-6 last:pb-0">
+                <p
+                  class="text-sm font-medium pb-2.5 text-text"
+                  set:html={markdownify(contact.title)}
+                />
+                {contact.location && (
+                  <p
+                    class="text-text mb-1"
+                    set:html={markdownify(contact.location)}
+                  />
+                )}
+                {contact.label && contact.link && (
+                  <a
+                    href={contact.link}
+                    target="_blank"
+                    class="text-primary inline-flex items-center gap-1 font-secondary hover:text-primary/80 transition duration-300"
+                    aria-label={contact.label}
+                  >
+                    {contact.label}
+                    <svg
+                      width="16"
+                      height="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      class="text-xl -rotate-45 "
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2.5"
+                        d="M14 5l7 7m0 0l-7 7m7-7H3"
+                      />
+                    </svg>
+                  </a>
+                )}
+
+                {contact.content && contact.link && (
+                  <a
+                    href={contact.link}
+                    target="_blank"
+                    class="hover:text-primary transition duration-300"
+                    aria-label={contact.content}
+                  >
+                    {contact.content}
+                  </a>
+                )}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-5 bg-light border-t border-border mt-14">
+    <div
+      class="container flex flex-col sm:flex-row justify-between items-center gap-5"
+    >
+      <span
+        class="text-center [&>a]:text-primary"
+        set:html={markdownify(replaceYear(config.params.copyright))}
+      />
+      <a
+        href="/privacy-policy"
+        class="hover:text-primary transition duration-300"
+        aria-label="Privacy Policy Link">Privacy Policy</a
+      >
+    </div>
+  </div>
+</footer>

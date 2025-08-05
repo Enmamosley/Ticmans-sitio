@@ -1,0 +1,37 @@
+---
+import Base from "@/layouts/Base.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import CallToAction from "@/partials/CallToAction.astro";
+import PageHeader from "@/partials/PageHeader.astro";
+import Accordion from "@/shortcodes/Accordion";
+import type { CollectionEntry } from "astro:content";
+import { getEntry } from "astro:content";
+
+const pageIndex = await getEntry("faq", "-index");
+if (!pageIndex) return null;
+const { page_header } = pageIndex.data;
+const faqSectionData = (await getEntry("faqSectionCollection", "faq")) as CollectionEntry<"faqSectionCollection">;
+const { list } = faqSectionData.data;
+---
+
+<Base {...pageIndex.data}>
+  <PageHeader title={page_header.title} subtitle={page_header.description} />
+  <section class="ph-merged-section">
+    <div class="container container--ph-merged">
+      <div class="section-container">
+        <div class="section-content space-y-5">
+          {
+            list.map((item, index) => (
+              <div data-aos="fade-up-sm" data-aos-delay={100 * index}>
+                <Accordion client:load title={item.question}>
+                  <div set:html={markdownify(item.answer)} />
+                </Accordion>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+  <CallToAction />
+</Base>

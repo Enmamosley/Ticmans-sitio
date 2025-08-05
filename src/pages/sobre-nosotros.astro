@@ -1,0 +1,25 @@
+---
+import AvailableCountries from "@/components/AvailableCountries.astro";
+import TeamMembers from "@/components/TeamMembers.astro";
+import Base from "@/layouts/Base.astro";
+import CallToAction from "@/partials/CallToAction.astro";
+import CompanyHero from "@/partials/CompanyHero.astro";
+import CompanyValues from "@/partials/CompanyValues.astro";
+import CompanyVision from "@/partials/CompanyVision.astro";
+import TestimonialSection from "@/partials/TestimonialSection.astro";
+import { getEntry } from "astro:content";
+
+const pageIndex = await getEntry("company", "-index");
+if (!pageIndex) return null;
+const { hero, values, vision_mission } = pageIndex.data;
+---
+
+<Base {...pageIndex.data}>
+  <CompanyHero hero={hero} />
+  <CompanyValues values={values} />
+  <CompanyVision vision_mission={vision_mission} />
+  <TeamMembers />
+  <AvailableCountries />
+  <TestimonialSection />
+  <CallToAction />
+</Base>

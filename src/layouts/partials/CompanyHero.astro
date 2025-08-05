@@ -1,0 +1,76 @@
+---
+import ImageMod from "@/components/ImageMod.astro";
+import { markdownify } from "@/lib/utils/textConverter";
+import type { CollectionEntry } from "astro:content";
+
+const { hero } = Astro.props;
+
+const { title, gallery, footer } =
+  hero as CollectionEntry<"company">["data"]["hero"];
+---
+
+<section class="ph-spacing pb-24 xl:pb-40">
+  <div class="container">
+    <div class="section-container">
+      <div class="section-intro centralize">
+        <h1
+          class="text-h2 font-semibold hasEmphasize"
+          data-aos="fade-up-sm"
+          data-aos-delay="0"
+          set:html={markdownify(title)}
+        />
+      </div>
+      <div class="section-content" data-aos="fade-up-sm" data-aos-delay="100">
+        <!-- Gallery Section -->
+        {
+          gallery.filter((f) => f.enable).length > 0 && (
+            <div class="grid sm:grid-cols-3 grid-rows-2 gap-4 md:gap-6">
+              {gallery.map((item) => (
+                <div
+                  style={`grid-column: span ${item.col_span} / span ${item.col_span}; grid-row: span ${item.row_span} / span ${item.row_span};`}
+                  class="rounded-lg md:rounded-2xl overflow-hidden"
+                >
+                  <ImageMod
+                    width={item.width}
+                    height={item.height}
+                    src={item.src}
+                    alt={item.alt}
+                    class="size-full object-cover"
+                  />
+                </div>
+              ))}
+            </div>
+          )
+        }
+
+        {
+          footer.enable && (
+            <div
+              class="flex flex-col md:flex-row md:items-center
+             gap-10 mt-16"
+            >
+              <div class="md:w-6/12">
+                <h2
+                  class="hasEmphasize text-h2-sm lg:col-10 "
+                  data-aos=""
+                  set:html={markdownify(footer.title)}
+                />
+                {footer.button.enable && (
+                  <a href={footer.button.link} class="btn btn-primary mt-9">
+                    {footer.button.label}
+                  </a>
+                )}
+              </div>
+              <div class="md:w-6/12">
+                <p
+                  class="text-text-light"
+                  set:html={markdownify(footer.description)}
+                />
+              </div>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
